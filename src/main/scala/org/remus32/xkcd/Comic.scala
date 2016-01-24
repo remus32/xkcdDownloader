@@ -18,6 +18,10 @@ import scala.util.matching.Regex
 class Comic(val id: Int) {
 
   /**
+    * Comic explanation on [[http://www.explainxkcd.com]]
+    */
+  lazy val explain = new URL(s"http://www.explainxkcd.com/wiki/index.php/$id")
+  /**
     * Parsed comic metadata
     */
   lazy val data: Pattern = Comic.parse(metaRef)
@@ -36,6 +40,7 @@ class Comic(val id: Int) {
     val formattedDate = format.format(date)
     r = r + s"  from $formattedDate\n"
     r = r + s"  $url"
+    r = r + s"  Explanation on $explain"
     r
   }
   /**

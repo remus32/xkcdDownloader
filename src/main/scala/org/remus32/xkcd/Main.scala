@@ -17,7 +17,18 @@ object Main extends App {
     * Gson instance
     */
   lazy val gson = new Gson()
-  private lazy val cache = {
+  lazy val taskList: List[Task] = List[Task](
+    tasks.Quit,
+    tasks.Clean,
+    tasks.Show,
+    tasks.Info,
+    tasks.Search,
+    tasks.Archive
+  )
+  /**
+    * Cache directory
+    */
+  lazy val cache = {
     val r = new File(cwd, "cache")
     if (!r.isDirectory) {
       r.mkdir()
@@ -75,7 +86,7 @@ object Main extends App {
   /**
     * Cleans cwd cache
     */
-  def clean(): Unit = {
+  def clean(): Boolean = {
     FileUtils.deleteDirectory(cache)
     cwd.mkdirs()
   }
@@ -83,63 +94,31 @@ object Main extends App {
   println("Getting latest comic...")
   Comic.latest
   Gui(call = (call: String) => {
-    var stop: Boolean = false
     val split = call.split(" ")
-    split(0) match {
-      case "quit" =>
-        stop = true
-      case "clean" =>
-        println("[info][main] Cleaning...")
-        clean()
-      case "show" =>
-        if (split.length == 1) println("Usage: show <comic id>")
-        else if (split.length > 1) {
-          val comic = Comic(Comic.resolveComic(split(1)))
-          val img = comic.image
-          Gui.showImage(img, 0, 0)
-        }
-      case "archive" =>
-        if (split.length == 1) {
-          println("Usage: archive <comic id/from> [to]")
-        } else if (split.length == 2) {
-          val comic = Comic(Comic.resolveComic(split(1)))
-          val out = new File(cwd, "xkcd")
-          out.mkdir()
-          comic.copyImageTo(out)
-
-        } else if (split.length == 3) {
-          val first = Comic.resolveComic(split(1))
-          val last = Comic.resolveComic(split(2))
-          for (a <- first to last) {
-            val comic = Comic(a)
-            val out = new File(cwd, "xkcd")
-            out.mkdir()
-            comic.copyImageTo(out)
-
-          }
-
-        }
-      case "info" =>
-        val comic = Comic(Comic.resolveComic(split(1)))
-        print(comic.info)
-      case "search" =>
-        if (split.length == 1) {
-          println("Usage: search <regexp>")
-        } else if (split.length == 2) {
-          val what = split(1)
-          val startTime = System.currentTimeMillis()
-          var count = 0
-          Comic.searchTitles(what.r).foreach(x => {
-            count = count + 1
-            println(x.info)
-          })
-          val endtime = System.currentTimeMillis()
-          val time = (endtime - startTime) / 1000F
-          println(s"Found $count matches in $time seconds")
-        }
-      case x =>
-        println(s"Task $x doesn't exist")
+    val first = split(0)
+    var matched = false
+    val startTime = System.currentTimeMillis()
+    var success = false
+    taskList.foreach((f) => {
+      if (f.name == first) {
+        matched = true
+        success = f.run(split)
+      }
+    })
+    val endTime = System.currentTimeMillis()
+    val time = (endTime - startTime) / 1000F
+    val r = {
+      var l = ""
+      success match {
+        case true => l = s"Successfully done '$call'"
+        case false => l = s"Done '$call' with errors"
+      }
+      l
     }
-    stop
+    if (matched) {
+      println(s"$r in $time s.")
+    } else {
+      println(s"Task $first does not exist")
+    }
   })
 }

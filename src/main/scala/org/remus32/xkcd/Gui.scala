@@ -10,6 +10,7 @@ import jline.console.history.FileHistory
   * Gui controller
   */
 object Gui {
+  lazy val history = new File(Main.cwd, ".xkcdhistory")
   lazy val reader = new ConsoleReader()
 
   /**
@@ -17,13 +18,13 @@ object Gui {
     *
     * @param call Callback; return true to stop app
     */
-  def apply(call: String => Boolean): Unit = {
+  def apply(call: String => Unit): Unit = {
     reader.setPrompt("> ")
-    reader.setHistory(new FileHistory(new File(Main.cwd, ".xkcdhistory")))
+    if (!history.isFile) history.createNewFile()
+    reader.setHistory(new FileHistory(history))
     reader.setHistoryEnabled(true)
-    var stop = false
-    while (!stop) {
-      stop = call(reader.readLine())
+    while (true) {
+      call(reader.readLine())
     }
   }
 
