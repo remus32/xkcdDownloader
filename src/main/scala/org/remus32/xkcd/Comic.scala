@@ -5,6 +5,7 @@ import java.net.URL
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+import com.typesafe.scalalogging.{LazyLogging, StrictLogging}
 import org.apache.commons.io.FileUtils
 import org.remus32.xkcd.Comic.Pattern
 
@@ -15,7 +16,7 @@ import scala.util.matching.Regex
   * Generic comic
   * Constructors should be never used! See Comic.apply(id:Int)
   */
-class Comic(val id: Int) {
+class Comic(val id: Int) extends StrictLogging {
 
   /**
     * Comic explanation on [[http://www.explainxkcd.com]]
@@ -39,7 +40,7 @@ class Comic(val id: Int) {
     val format = DateTimeFormatter.ISO_LOCAL_DATE
     val formattedDate = format.format(date)
     r = r + s"  from $formattedDate\n"
-    r = r + s"  $url"
+    r = r + s"  $url\n"
     r = r + s"  Explanation on $explain"
     r
   }
@@ -60,12 +61,7 @@ class Comic(val id: Int) {
     //noinspection FieldFromDelayedInit
     val url = new URL(Main.xkcdBase + s"$id/info.0.json")
     val ref = Main.getRef(url)
-    val cache = new File(getClass.getResource("/xkcd/cache/" + Math.abs(url.toString.hashCode).toString + ".json").toURI)
-    if (!(ref.isFile && ref.length() > 128L) && !cache.isFile) Main.download(url, ref)
-    else if (cache.isFile) {
-      println(s"Using cache from $cache...")
-      FileUtils.copyFile(cache, ref)
-    }
+    if (!(ref.isFile && ref.length() > 128L)) Main.download(url, ref)
     ref
   }
   /**
@@ -81,16 +77,16 @@ class Comic(val id: Int) {
   def copyImageTo(to: File): Unit = {
     val end = image.toString.split("\\.").last
     val target = new File(to, s"$id.$end")
-    println(s"Copying from $image to $target")
+    logger.debug(s"Copying from $image to $target")
     FileUtils.copyFile(image, target)
   }
 
-  println(s"[INFO] Created comic: id: $id")
-  println(s"[INFO][Comic#$id] Downloading metadata...")
+  logger.debug(s"[INFO] Created comic: id: $id")
+  logger.debug(s"[INFO][Comic#$id] Downloading metadata...")
   data
 }
 
-object Comic {
+object Comic extends LazyLogging {
   /**
     * List of all comics
     */
@@ -107,7 +103,6 @@ object Comic {
     * A reference to latest comic
     */
   lazy val latest: Comic = {
-    println("Getting latest comic")
     val ref = Main.getRef(latestUrl)
     var file = ref
     if (((System.currentTimeMillis() / 1000L) - ref.lastModified) > 60 * 2 || !ref.isFile) {
@@ -200,14 +195,14 @@ object Comic {
     } catch {
       case e: ComicNotFoundException =>
         val id = e.id
-        println(s"[ERROR][Main] Comic $id not found")
+        logger.error(s"Comic $id not found")
       case e: BadComicIdException =>
         val id = e.id
-        println(s"[ERROR][Main] $id is not a valid comic identifier")
+        logger.error(s"$id is not a valid comic identifier")
       case e: ComicNotFoundException =>
-        println(s"[ERROR][Main] HTTP 404: Comic not found")
+        logger.error(s"HTTP 404: Comic not found")
     }
-    new Comic(id)
+    null
   }
 
   /**
@@ -218,10 +213,10 @@ object Comic {
     */
   def searchTitles(regex: Regex): List[Comic] = {
     val r = mutable.MutableList[Comic]()
-    println("Loading metadata...")
+    logger.info("Loading metadata...")
     comicList
     val count = comicList.length
-    println(s"Searching in $count comics...")
+    logger.debug(s"Searching in $count comics...")
     comicList.foreach(x => {
       val m = regex.findAllMatchIn(x.data.title)
       m.foreach(x2 => {

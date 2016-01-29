@@ -3,16 +3,19 @@ package org.remus32.xkcd
 
 import java.io.File
 import java.net.URL
+import java.util.logging.{Level, Logger}
 
 import com.google.gson.Gson
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.io.FileUtils
+import org.slf4j.LoggerFactory
 
 /**
   * Main application object
   *
   * @since 1.0
   */
-object Main extends App {
+object Main extends App with LazyLogging {
   /**
     * Gson instance
     */
@@ -31,7 +34,7 @@ object Main extends App {
   lazy val cache = {
     val r = new File(cwd, "cache")
     if (!r.isDirectory) {
-      r.mkdir()
+      loadCache()
     }
     r
   }
@@ -63,7 +66,7 @@ object Main extends App {
     * @see getRef
     */
   def download(source: URL, reference: File): File = {
-    println(s"Downloading $source to $reference")
+    logger.debug(s"Downloading $source to $reference")
     reference.createNewFile()
     FileUtils.copyURLToFile(source, reference)
     if (deleteOnExit()) reference.deleteOnExit()
@@ -91,7 +94,17 @@ object Main extends App {
     cwd.mkdirs()
   }
 
-  println("Getting latest comic...")
+  def setLoggerLevel(level: Level) = {
+    val l = LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME).asInstanceOf[Logger]
+    l.setLevel(level)
+  }
+
+  private def loadCache(): Unit = {
+    Cache.load()
+  }
+
+  setLoggerLevel(Level.ALL)
+  logger.info("Getting latest comic...")
   Comic.latest
   Gui(call = (call: String) => {
     val split = call.split(" ")
@@ -107,18 +120,12 @@ object Main extends App {
     })
     val endTime = System.currentTimeMillis()
     val time = (endTime - startTime) / 1000F
-    val r = {
-      var l = ""
-      success match {
-        case true => l = s"Successfully done '$call'"
-        case false => l = s"Done '$call' with errors"
-      }
-      l
+    success match {
+      case true => logger.info(s"Successfully done '$call' in $time s.")
+      case false => logger.error(s"Done '$call' with errors in $time s.")
     }
-    if (matched) {
-      println(s"$r in $time s.")
-    } else {
-      println(s"Task $first does not exist")
+    if (!matched) {
+      logger.error(s"Task $first does not exist")
     }
   })
 }
