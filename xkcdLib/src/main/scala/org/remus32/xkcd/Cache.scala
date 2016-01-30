@@ -36,7 +36,8 @@ object Cache extends LazyLogging {
   lazy val cache: Cache = {
     System.getProperty("xkcd.cache") match {
       case x: String if x != "" => cacheList(x)
-      case "" => cacheList("File")
+      case "" => cacheList("file")
+      case null => cacheList("file")
     }
   }
   lazy val cacheList = Map[String, Cache](

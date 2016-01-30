@@ -47,8 +47,8 @@ class Comic(val id: Int) extends StrictLogging {
     */
   lazy val image: Reference = {
     val url = new URL(data.img)
-    val split = url.toString.split("\\.")
-    val r = cache.make(split.last)
+    val split = url.toString.split("\\.").last
+    val r = cache.make(s"$id.$split")
     r.load(url)
     r
   }

@@ -1,15 +1,17 @@
 package org.remus32.xkcd
 
-import java.awt.EventQueue
 import java.io.File
+import javax.imageio.ImageIO
+import javax.swing.ImageIcon
 
+import com.typesafe.scalalogging.LazyLogging
 import jline.console.ConsoleReader
 import jline.console.history.FileHistory
 
 /**
   * Gui controller
   */
-object Gui {
+object Gui extends LazyLogging{
   lazy val history = new File(Util.cache(), ".xkcdhistory")
   lazy val reader = new ConsoleReader()
 
@@ -33,15 +35,26 @@ object Gui {
     *
     * @todo
       * @param img  A file reference to comic
-    * @param width  Image width
-    * @param height Image height
     */
-  def showImage(img: File, width: Int, height: Int) = {
-    EventQueue.invokeLater(new Runnable() {
-      override def run() {
-        val panel = new ImageJPanel(img, width, height)
-        panel.setVisible(true)
-      }
-    })
+  def showImage(img: Comic): Unit = {
+    val image = img.image.toFile()
+    val id = img.id
+    val comicTitle = img.data.title
+    val bImg = ImageIO.read(image)
+    val width = bImg.getWidth()+((bImg.getWidth()/100)*5)
+    val height = bImg.getHeight()+((bImg.getHeight()/100)*5)
+    import scala.swing._
+
+    class UI extends MainFrame {
+      title = s"XKCD $id: $comicTitle"
+      preferredSize = new Dimension(width, height)
+      contents = new Label("",new ImageIcon(bImg),Alignment.Center)
+    }
+    try {
+      val ui = new UI
+      ui.visible = true
+    }catch{
+      case e:Exception => logger.error("Gui(Swing) error in: ", e)
+    }
   }
 }
