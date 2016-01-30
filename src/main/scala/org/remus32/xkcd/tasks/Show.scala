@@ -1,6 +1,6 @@
 package org.remus32.xkcd.tasks
 
-import org.remus32.xkcd.{Comic, Gui, Task}
+import org.remus32.xkcd.{Comic, Task}
 
 /**
   * Created by remus32 on 24/01/16.
@@ -20,7 +20,7 @@ object Show extends Task {
       case 2 =>
         val comic = Comic(Comic.resolveComic(args(1)))
         val img = comic.image
-        Gui.showImage(img, 0, 0)
+        //Gui.showImage(img, 0, 0)
         true
     }
   }

@@ -67,5 +67,6 @@ crashlytics-build.properties
 
 /cache2
 /cache
+/xkcdCache
 /xkcd
 .xkcdhistory

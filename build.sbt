@@ -5,6 +5,8 @@ lazy val commonSettings = Seq(
   version := "0.1.0-SNAPSHOT",
   scalaVersion := "2.11.7",
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0-M15" % "test",
+  libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
+  libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.14",
   scalacOptions += "-target:jvm-1.8"
 )
 
@@ -13,8 +15,7 @@ lazy val app = (project in file(".")).
   settings(
     name := "xkcdApp",
     libraryDependencies += "jline" % "jline" % "2.13",
-    libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.0.0-M2",
-    libraryDependencies += "org.slf4j" % "slf4j-jdk14" % "1.7.14"
+    libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.0.0-M2"
   ).
   dependsOn(lib)
 
@@ -24,10 +25,7 @@ lazy val lib = (project in file("xkcdLib")).
     name := "xkcdLib",
     libraryDependencies += "com.google.code.gson" % "gson" % "2.5",
     libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2",
-    libraryDependencies += "commons-cli" % "commons-cli" % "1.3.1",
-    libraryDependencies += "org.rauschig" % "jarchivelib" % "0.7.1",
-    libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
-    libraryDependencies += "org.slf4j" % "slf4j-jdk14" % "1.7.14"
+    libraryDependencies += "org.rauschig" % "jarchivelib" % "0.7.1"
   )
 /*
 libraryDependencies += "com.google.code.gson" % "gson" % "2.5"

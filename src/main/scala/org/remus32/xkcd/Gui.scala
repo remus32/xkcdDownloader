@@ -10,7 +10,7 @@ import jline.console.history.FileHistory
   * Gui controller
   */
 object Gui {
-  lazy val history = new File(Main.cwd, ".xkcdhistory")
+  lazy val history = new File(Util.cache(), ".xkcdhistory")
   lazy val reader = new ConsoleReader()
 
   /**

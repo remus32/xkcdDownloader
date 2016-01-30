@@ -1,8 +1,6 @@
 package org.remus32.xkcd.tasks
 
-import java.io.File
-
-import org.remus32.xkcd.{Comic, Main, Task}
+import org.remus32.xkcd.{Comic, Task, Util}
 
 /**
   * Clean cache directory
@@ -21,7 +19,7 @@ object Archive extends Task {
         false
       case 2 =>
         val comic = Comic(Comic.resolveComic(args(1)))
-        val out = new File(Main.cwd, "xkcd")
+        val out = Util.out
         out.mkdir()
         comic.copyImageTo(out)
         true
@@ -30,7 +28,7 @@ object Archive extends Task {
         val last = Comic.resolveComic(args(2))
         for (a <- first to last) {
           val comic = Comic(a)
-          val out = new File(Main.cwd, "xkcd")
+          val out = Util.out()
           out.mkdir()
           comic.copyImageTo(out)
         }

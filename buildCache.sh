@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-cd src/main/resources/xkcd
-tar -cvzf "cache.tar.gz" $( find "../../../../cache" -name "*.json" )
+tar -cvzf "xkcdLib/src/main/resources/xkcd/cache.tar.gz" $( find "xkcdCache" -name "*.json" )
