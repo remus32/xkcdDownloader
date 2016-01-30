@@ -33,9 +33,15 @@ trait Cache {
 object Cache extends LazyLogging {
   lazy val res = new File(getClass.getResource("/xkcd/cache.tar.gz").toURI)
   lazy val archiver = ArchiverFactory.createArchiver("tar", "gz")
-  lazy val cache = cacheList("file")
+  lazy val cache: Cache = {
+    System.getProperty("xkcd.cache") match {
+      case x: String if x != "" => cacheList(x)
+      case "" => cacheList("File")
+    }
+  }
   lazy val cacheList = Map[String, Cache](
-    ("file", new caches.File)
+    ("file", new caches.File),
+    ("memory", new caches.Memory)
   )
   val outName = "xkcdCache"
 
