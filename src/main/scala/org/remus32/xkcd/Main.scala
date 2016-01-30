@@ -9,6 +9,9 @@ import com.typesafe.scalalogging.LazyLogging
   * @since 1.0
   */
 object Main extends App with LazyLogging {
+  /**
+    * List of executable tasks
+    */
   lazy val taskList: List[Task] = List[Task](
     tasks.Quit,
     tasks.Clean,
@@ -17,8 +20,16 @@ object Main extends App with LazyLogging {
     tasks.Search,
     tasks.Archive
   )
-  System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "trace")
-  Util.init()
+
+  /**
+    * Init system
+    */
+  private def init() = {
+    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "trace")
+    Util.init()
+  }
+
+  init()
   logger.info("Getting latest comic...")
   Comic.latest
   Gui(call = (call: String) => {
