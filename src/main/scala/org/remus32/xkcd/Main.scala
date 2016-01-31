@@ -18,7 +18,8 @@ object Main extends App with LazyLogging {
     tasks.Show,
     tasks.Info,
     tasks.Search,
-    tasks.Archive
+    tasks.Archive,
+    tasks.Explain
   )
 
   /**

@@ -35,6 +35,13 @@ class Explanation(val comic: Comic) extends LazyLogging {
       response.close()
     }
   }
+
+  def info(): String = {
+    apiRef
+    var r = ""
+    r += "Ahoj\n"
+    r
+  }
 }
 
 object Explanation extends LazyLogging {
