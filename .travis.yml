@@ -1,12 +1,13 @@
 language: scala
 scala:
-   - 2.11.7
+- 2.11.7
 jdk:
-   - oraclejdk8
+- oraclejdk8
 script:
-  - sbt clean coverage test &&
-    sbt coverage &&
-    sbt lib/coverage
+- sbt clean coverage test && sbt coverage && sbt lib/coverage
 after_success:
-  - sbt coveralls &&
-    sbt lib/coveralls
+- sbt coveralls && sbt lib/coveralls
+env:
+  global:
+  - secure: SDpPMNFF0Mue4/4gpHWG21FYohXMPacse05RGiYSp54//VC/b8wrFFNTf9A+/9sZNaMDphRPc3xaGRqnYjzKvTxQyX6W6T52Xq6UDEeLjJong+R99SzZ1IbUpZ9wvUH+1wItkOVAOQs6Tuc6zbpQv0cpodX/cMK9HxY5oBFq1l9te20ersfrQGmyeqhtAWkQ6KxFRpRD1NMQZuZYMwIAg0yHxYZraaHCug5vysQjILSsK7y/LV6I5rP40Hxla/7R+EWWghHzNj2NKuJXjGOSD7eCFjlX+VFgPEanJal18WNpBdsYOjfeAKMHBZGUsXGZGUjl/aw7CSex0yqZlfMPofdzmNvBQW93gX6ESgkdoCMf2xi0WbJ+lTbti8lRmOOhVL1aRkAmnuQaaJpUo/l/XvElMNE8UeWPJFQ/QEg80cQCrYgZ38OKg5ct+DQ9uII82f4lWvr4d8VJEL6x4iAKAMNu8iVK/2gA7goKUpjDxOdqJlFCxXFmPdUiGHeXO+NpVhf1iklHtU4H9i7fgv+nwuG9yhCJ5Z5hq99BJeK1sFLqL6bC768CWgZlnaAiM/TwEMpUlcK4Fgl5Bs4BD0upzCDdkcrfC1vCmcklcYjfW35vWJKR6J0oRnw11R4q22K0XXzvqxYrDtQ1KUEZA2j5qJQ0XIH2uQT2dOmdwM81lSA=
+  - secure: n0wxHUmoveplynxy/KqnhaYJlMnUicdCjbbXZvybtdWYtJdwL8wvc/riDlekeOC0RoJM/EWvcR+4Q3SCtwy0nv3hCH6CU2foycREV49NPQ999szzyLwQgWI7SFfBwEMZTN27eYOiE38hFKvvNCfMvVswCvehj+YlNkaEtov0QC2fn3B4lwA5FoIRGI6Ki2zCmOBEDyz3a/lEmhNQrRCpzYmOArFJyfeCz7suWYmP0Ln5XyjHFvEXR/nJ/xs8qYQhvZcMQyTQByeajANvgcBVUTTKH06CkWU7N7r6GSuUXoWCPHH6zQqrzIdnD2JWta0Hz/aAwP5wfysV0sIVNINvshZbKRv4OKaEXIiKCZdP/YhveIA+Y3bmh+nabXg+RaDni9UMU1+LDQZSCIcx8cdoSRpRUlMjzftL+ISh+l7guxCvF+LGA/rKNOYaSwIDo63zDXyEiaC0ZnNDyHOhXI7vZBV7Tg2OrzasLnxxwrNz1QFZJCbKUP6mKbafn7blKjlyyh26jRoZ/t/BkUlMedUbu+rsijSItR8C2GrrhPj9LHpxxJYeBVbPqU/6XuNm9kHv6x/ldh1oMXdKYjwQ7d9JDHyoYbGepfE1CC355rT1xd3FWN2Z3rfAqdpkQGjcMd8tPx00nIKu6X7QfVu0Gb1vzp0MlxfRV0sjmTQnZvn0/34=
