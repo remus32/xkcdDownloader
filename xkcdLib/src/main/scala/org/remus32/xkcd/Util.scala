@@ -66,21 +66,17 @@ object Util extends LazyLogging {
     *
     * @return
     */
-  def cache(): io.File = {
+  def cache(log: Boolean = true): io.File = {
     val prop = System.getProperty("xkcd.cacheDir")
     prop match {
       case null =>
-        return new io.File(System.getProperty("user.dir") + "/xkcdCache")
+        new io.File(System.getProperty("user.dir") + "/xkcdCache")
       case e: String if new File(e).isDirectory =>
-        try {
-          return new io.File(e)
-        } catch {
-          case e: io.IOException =>
-            logger.error("Got IOException", e)
-        }
+        new io.File(e)
+      case e =>
+        if (log) logger.error(s"Directory xkcd.cacheDir($prop) does not exist!")
+        new io.File(System.getProperty("user.dir") + "/xkcdCache")
     }
-    logger.error(s"Directory xkcd.cacheDir($prop) does not exist!")
-    new io.File(System.getProperty("user.dir") + "/xkcdCache")
   }
 
   /**
