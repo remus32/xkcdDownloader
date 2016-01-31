@@ -24,5 +24,5 @@ class File(val name: String) extends Reference with LazyLogging {
 
   def load(from: URL): Unit = if (!(file.isFile && file.length() > 128L)) Util.download(from, file)
 
-  def toFile(): io.File = file
+  def toFile: io.File = file
 }

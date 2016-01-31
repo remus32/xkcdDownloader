@@ -52,7 +52,7 @@ object Util extends LazyLogging {
     * - makes cache directory
     */
   def init() = {
-    cache.mkdirs
+    cache().mkdirs
     out.mkdirs
     val cacheS = Cache.cache.getClass.getCanonicalName
     logger.info(s"Using $cacheS as cache wrapper")
@@ -74,7 +74,6 @@ object Util extends LazyLogging {
       case e: String if new File(e).isDirectory =>
         new io.File(e)
       case e =>
-        if (log) logger.error(s"Directory xkcd.cacheDir($prop) does not exist!")
         new io.File(System.getProperty("user.dir") + "/xkcdCache")
     }
   }

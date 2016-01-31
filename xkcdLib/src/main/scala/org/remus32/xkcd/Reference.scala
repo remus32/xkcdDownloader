@@ -19,7 +19,7 @@ trait Reference {
 
   def copyTo(to: File): Unit
 
-  def toFile(): File
+  def toFile: File
 
   def cache(): File = Util.cache()
 }
