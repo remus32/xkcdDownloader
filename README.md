@@ -12,4 +12,15 @@ sbt run
 1. Show
     *Usage: show comicId*
     Opens comic in new Swing window
+2. Quit
+    *Usage: quit*
+    Exit program
+3. Archive
+    *Usage: archive comicId \[secondComicId\]*
+    Downloads comic images
+    If second comic id specified, downloads from from first to second id
     
+**Where comicId can be**
+- **id** - Int comic id 
+- **last** - Last published comic
+- **random** - Random comic
