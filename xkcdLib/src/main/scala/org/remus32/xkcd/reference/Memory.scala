@@ -30,9 +30,9 @@ class Memory(val name: String) extends Reference with LazyLogging {
   /**
     * This method uses files
     */
-  def toFile(): io.File = {
+  def toFile: io.File = {
     val r = new File(name)
     if(url!=null) r.load(url)
-    r.toFile()
+    r.toFile
   }
 }

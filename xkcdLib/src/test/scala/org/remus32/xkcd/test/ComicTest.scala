@@ -43,7 +43,7 @@ class ComicTest extends FlatSpec {
     init()
     val comic = Comic(404)
     assert(comic.data.num == 404)
-    assert(comic.image.toFile().isFile)
+    assert(comic.image.toFile.isFile)
   }
 
   "Comic explanation" should "exist" in {
@@ -57,8 +57,8 @@ class ComicTest extends FlatSpec {
     val ref = Cache.cache.make("test0")
     ref.load(new URL(Util.xkcdBase + "732/info.0.json"))
     assert(ref.read == Comic(732).metaRef.read())
-    assert(ref.toFile().toString != Comic(732).metaRef.toFile().toString)
-    assert(IOUtils.toString(new FileInputStream(ref.toFile())) == IOUtils.toString(new FileInputStream(Comic(732).metaRef.toFile())))
+    assert(ref.toFile.toString != Comic(732).metaRef.toFile.toString)
+    assert(IOUtils.toString(new FileInputStream(ref.toFile)) == IOUtils.toString(new FileInputStream(Comic(732).metaRef.toFile)))
   }
 
   "List of all comics" should "contain all comics" in {
