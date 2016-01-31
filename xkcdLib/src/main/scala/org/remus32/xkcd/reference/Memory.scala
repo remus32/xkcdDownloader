@@ -27,6 +27,8 @@ class Memory(val name: String) extends Reference with LazyLogging {
 
   def exist(): Boolean = !(contents == "")
 
+  def write(what: String): Unit = contents = what
+
   /**
     * This method uses files
     */

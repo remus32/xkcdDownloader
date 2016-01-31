@@ -21,5 +21,7 @@ trait Reference {
 
   def toFile: File
 
+  def write(what: String): Unit
+
   def cache(): File = Util.cache()
 }
