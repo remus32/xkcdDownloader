@@ -152,7 +152,9 @@ object Comic extends LazyLogging {
 
   def randomComicId(): Int = {
     val rand = new Random()
-    rand.nextInt(latest.id + 1)
+    val r = rand.nextInt(latest.id + 1)
+    if (r == 0) return randomComicId()
+    r
   }
 
   /**
