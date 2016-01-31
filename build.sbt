@@ -15,8 +15,14 @@ lazy val app = (project in file(".")).
   settings(
     name := "xkcdApp",
     libraryDependencies += "jline" % "jline" % "2.13",
-    libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.0.0-M2",
-    fork := true
+    libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.0.0-M2"
+  ).
+  settings(packAutoSettings).
+  settings(
+    packMain := Map("xkcd" -> "org.remus32.xkcd.Main"),
+    packJvmOpts := Map("xkcd" -> Seq("-Xmx512m")),
+    packGenerateWindowsBatFile := false,
+    packJarNameConvention := "no-version"
   ).
   dependsOn(lib)
 
