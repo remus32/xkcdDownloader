@@ -1,12 +1,9 @@
 language: scala
 scala:
-   - 2.11.7
+- 2.11.7
 jdk:
-   - oraclejdk8
+- oraclejdk8
 script:
-  - sbt clean coverage test &&
-    sbt coverage &&
-    sbt lib/coverage
+- sbt clean coverage test && sbt coverage && sbt lib/coverage
 after_success:
-  - sbt coveralls &&
-    sbt lib/coveralls
+- sbt coveralls && sbt lib/coveralls
