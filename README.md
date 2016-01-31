@@ -1,4 +1,4 @@
-# xkcd Downloader
+# xkcd Downloader [![Build Status](https://travis-ci.org/remus32/xkcdDownloader.svg?branch=master)](https://travis-ci.org/remus32/xkcdDownloader)
 #### Download xkcd, search trough comic titles, show explanation and more
 ***
 ###### Install with:
