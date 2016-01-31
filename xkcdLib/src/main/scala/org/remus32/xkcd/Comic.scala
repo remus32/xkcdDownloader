@@ -9,6 +9,7 @@ import com.typesafe.scalalogging.{LazyLogging, StrictLogging}
 import org.remus32.xkcd.Comic.Pattern
 
 import scala.collection.mutable
+import scala.util.Random
 import scala.util.matching.Regex
 
 /**
@@ -136,10 +137,22 @@ object Comic extends LazyLogging {
     * @return Comic id
     */
   def resolveComic(in: String): Int = {
-    if (in.matches("\\d+")) return in.toInt
-    if (in == "last") return latest.id
-    throw new BadComicIdException(s"$in")
-    0
+    in match {
+      case x if x.matches("\\d+") =>
+        in.toInt
+      case "last" =>
+        latest.id
+      case "random" =>
+        randomComicId()
+      case x =>
+        throw new BadComicIdException(s"$in")
+        0
+    }
+  }
+
+  def randomComicId(): Int = {
+    val rand = new Random()
+    rand.nextInt(latest.id + 1)
   }
 
   /**
@@ -210,5 +223,4 @@ object Comic extends LazyLogging {
     * Json encoding pattern
     */
   case class Pattern(month: Int, num: Int, year: Int, title: String, day: Int, img: String, alt: String)
-
 }
