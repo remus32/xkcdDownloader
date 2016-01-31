@@ -41,10 +41,9 @@ object Util extends LazyLogging {
     *
     * @see [[https://docs.oracle.com/javase/7/docs/api/java/lang/System.html#getProperty(java.lang.String) java.lang.System]]
     */
-  def deleteOnExit() = {
-    var r: Boolean = false
-    if (System.getProperty("xkcd.deleteonexit") == "true") r = true
-    r
+  def deleteOnExit(): Boolean = {
+    if (System.getProperty("xkcd.deleteonexit") == "true") return true
+    false
   }
 
   /**
@@ -71,8 +70,8 @@ object Util extends LazyLogging {
     val prop = System.getProperty("xkcd.cacheDir")
     prop match {
       case null =>
-        new io.File(System.getProperty("user.dir") + "/xkcdCache")
-      case e: String =>
+        return new io.File(System.getProperty("user.dir") + "/xkcdCache")
+      case e: String if new File(e).isDirectory =>
         try {
           return new io.File(e)
         } catch {
@@ -80,6 +79,7 @@ object Util extends LazyLogging {
             logger.error("Got IOException", e)
         }
     }
+    logger.error(s"Directory xkcd.cacheDir($prop) does not exist!")
     new io.File(System.getProperty("user.dir") + "/xkcdCache")
   }
 
