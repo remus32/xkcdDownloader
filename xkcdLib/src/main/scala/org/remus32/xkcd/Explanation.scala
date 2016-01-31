@@ -6,7 +6,11 @@ import com.typesafe.scalalogging.LazyLogging
   * Created by remus32 on 31/01/16.
   */
 class Explanation(val comic: Comic) extends LazyLogging {
-  val apiUrl = Util.explanationApiUrl(comic.id)
+  /**
+    * Explanation api(on [[http://explainxkcd.com]]) url
+    */
+  lazy val apiUrl = Util.explanationApiUrl(comic.id)
+
 }
 
 object Explanation extends LazyLogging {
