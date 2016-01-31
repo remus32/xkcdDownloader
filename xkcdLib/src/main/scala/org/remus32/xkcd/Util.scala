@@ -55,18 +55,20 @@ object Util extends LazyLogging {
   def init() = {
     cache.mkdirs
     out.mkdirs
+    val cacheS = Cache.cache.getClass.getCanonicalName
+    logger.info(s"Using $cacheS as cache wrapper")
     Cache.loadDefault()
   }
 
   /**
     * Get cache directory
     *
-    * Uses system prop. 'xkcd.cache'
+    * Uses system prop. 'xkcd.cacheDir'
     *
     * @return
     */
   def cache(): io.File = {
-    val prop = System.getProperty("xkcd.cache")
+    val prop = System.getProperty("xkcd.cacheDir")
     prop match {
       case null =>
         new io.File(System.getProperty("user.dir") + "/xkcdCache")

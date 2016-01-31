@@ -3,7 +3,6 @@ package org.remus32.xkcd
 import java.io.File
 
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.commons.io.FileUtils
 import org.rauschig.jarchivelib.ArchiverFactory
 
 /**
@@ -53,7 +52,8 @@ object Cache extends LazyLogging {
     val tmp = new File(first, outName)
     val files = tmp.listFiles()
     files.foreach(x => {
-      FileUtils.copyFileToDirectory(x, Util.cache())
+      val ref = cache.make(x.getName)
+      ref.load(x.toURI.toURL)
     })
   }
 }
