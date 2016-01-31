@@ -18,9 +18,13 @@ import scala.util.matching.Regex
   */
 class Comic(val id: Int) extends StrictLogging {
   /**
-    * Comic explanation on [[http://www.explainxkcd.com]]
+    * Comic explanation url on [[http://www.explainxkcd.com]]
     */
-  lazy val explain = new URL(s"http://www.explainxkcd.com/wiki/index.php/$id")
+  lazy val explainUrl = new URL(s"http://www.explainxkcd.com/wiki/index.php/$id")
+  /**
+    * Explanation of this comic
+    */
+  lazy val explanation = Explanation(this)
   /**
     * Parsed comic metadata
     */
@@ -40,7 +44,7 @@ class Comic(val id: Int) extends StrictLogging {
     val formattedDate = format.format(date)
     r = r + s"  from $formattedDate\n"
     r = r + s"  $url\n"
-    r = r + s"  Explanation on $explain\n"
+    r = r + s"  Explanation on $explainUrl\n"
     r
   }
   /**
