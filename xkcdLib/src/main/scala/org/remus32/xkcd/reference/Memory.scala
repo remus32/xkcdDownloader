@@ -11,8 +11,8 @@ import org.remus32.xkcd.Reference
   * Created by remus32 on 30/01/16.
   */
 class Memory(val name: String) extends Reference with LazyLogging {
-  var contents: String = ""
-  var url:URL = null
+  private var contents: String = ""
+  private var url: URL = null
 
   def copyTo(to: io.File): Unit = FileUtils.writeStringToFile(to, contents)
 
@@ -30,9 +30,9 @@ class Memory(val name: String) extends Reference with LazyLogging {
   /**
     * This method uses files
     */
-  def toFile(): io.File = {
+  def toFile: io.File = {
     val r = new File(name)
     if(url!=null) r.load(url)
-    r.toFile()
+    r.toFile
   }
 }

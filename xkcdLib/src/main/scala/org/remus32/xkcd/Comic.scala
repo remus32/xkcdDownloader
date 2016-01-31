@@ -150,6 +150,7 @@ object Comic extends LazyLogging {
     }
   }
 
+  //noinspection NoTailRecursionAnnotation
   def randomComicId(): Int = {
     val rand = new Random()
     val r = rand.nextInt(latest.id + 1)

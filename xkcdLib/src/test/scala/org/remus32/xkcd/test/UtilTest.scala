@@ -68,12 +68,12 @@ class UtilTest extends FlatSpec {
   it should "load default cache" in {
     init()
     Util.init()
-    val int: Int = cache.listFiles.length
+    val int: Int = cache().listFiles.length
     assert(int > Comic.latest.id || int == Comic.latest.id)
   }
 
   "Cache method" should "return cwd+/xkcdCache if no property given" in {
-    assert(cache.getAbsolutePath == new io.File(System.getProperty("user.dir") + "/xkcdCache").getAbsolutePath)
+    assert(cache().getAbsolutePath == new io.File(System.getProperty("user.dir") + "/xkcdCache").getAbsolutePath)
   }
 
   it should "be property value if given" in {
