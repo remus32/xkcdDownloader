@@ -5,6 +5,8 @@ jdk:
    - oraclejdk8
 script:
   - sbt clean coverage test &&
-    sbt coverageAggregate
+    sbt coverage &&
+    sbt lib/coverage
 after_success:
-  - sbt coveralls
+  - sbt coveralls &&
+    sbt lib/coveralls
