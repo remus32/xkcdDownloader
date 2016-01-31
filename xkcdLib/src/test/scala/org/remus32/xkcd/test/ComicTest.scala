@@ -49,7 +49,7 @@ class ComicTest extends FlatSpec {
   "Comic explanation" should "exist" in {
     init()
     val comic = Comic(723)
-    assert(comic.explain.toURI.isAbsolute)
+    assert(comic.explainUrl.toURI.isAbsolute)
   }
 
   "Reference" should "work" in {
