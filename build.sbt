@@ -15,7 +15,8 @@ lazy val app = (project in file(".")).
   settings(
     name := "xkcdApp",
     libraryDependencies += "jline" % "jline" % "2.13",
-    libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.0.0-M2"
+    libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.0.0-M2",
+    fork := true
   ).
   dependsOn(lib)
 

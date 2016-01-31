@@ -79,9 +79,12 @@ class Comic(val id: Int) extends StrictLogging {
     image.copyTo(to)
   }
 
+
   logger.debug(s"[INFO] Created comic: id: $id")
   logger.debug(s"[INFO][Comic#$id] Downloading metadata...")
   data
+
+  override def toString: String = id.toString
 }
 
 object Comic extends LazyLogging {

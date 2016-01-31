@@ -1,6 +1,6 @@
 package org.remus32.xkcd.tasks
 
-import org.remus32.xkcd.{Gui, Comic, Task}
+import org.remus32.xkcd.{Comic, Gui, Task}
 
 /**
   * Created by remus32 on 24/01/16.
