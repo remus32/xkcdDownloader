@@ -48,7 +48,7 @@ object Gui extends LazyLogging {
 
       def show(comic: Comic): Unit = {
         actualComic = comic
-        val image = actualComic.image.toFile()
+        val image = actualComic.image.toFile
         val id = actualComic.id
         val comicTitle = actualComic.data.title
         val bImg = ImageIO.read(image)
