@@ -4,4 +4,4 @@ scala:
 jdk:
 - oraclejdk8
 script:
-- sbt clean test && sbt "project lib" clean test
+- sbt clean test lib/clean lib/test
