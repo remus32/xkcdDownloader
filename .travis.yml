@@ -4,6 +4,6 @@ scala:
 jdk:
 - oraclejdk8
 script:
-- sbt clean coverage test && sbt coverage && sbt lib/coverage
+- sbt clean coverage test && sbt coverage && sbt "project lib" clean coverage test && sbt lib/coverage
 after_success:
 - sbt coveralls && sbt lib/coveralls
