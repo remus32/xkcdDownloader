@@ -3,6 +3,7 @@ package org.remus32.xkcd
 import java.net.URL
 
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.commons.io.IOUtils
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.remus32.xkcd.Explanation.Pattern
@@ -18,15 +19,21 @@ class Explanation(val comic: Comic) extends LazyLogging {
   lazy val apiUrl = Util.explanationApiUrl(comic.id)
   lazy val apiRef = {
     val ref = Cache.cache.make(s"exp-$id.json")
-    ref.load(apiUrl)
+    ref.write(load(apiUrl))
     ref
   }
   lazy val api = Util.gson.fromJson(apiRef.read(), classOf[Pattern])
   private val id = comic.id
 
-  def load(from: URL) = {
+  def load(from: URL): String = {
     val httpget = new HttpGet(from.toURI)
     httpget.addHeader("User-Agent", "Xkcd downloader")
+    val response = Explanation.httpclient.execute(httpget)
+    try {
+      IOUtils.toString(response.getEntity.getContent)
+    } finally {
+      response.close()
+    }
   }
 }
 
