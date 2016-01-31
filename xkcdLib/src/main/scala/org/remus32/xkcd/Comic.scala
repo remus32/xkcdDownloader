@@ -53,16 +53,16 @@ class Comic(val id: Int) extends StrictLogging {
     r.load(url)
     r
   }
-  protected lazy val cache = Cache.cache
   /**
     * A reference to comic metadata
     */
-  private lazy val metaRef: Reference = {
+  lazy val metaRef: Reference = {
     val url = new URL(Util.xkcdBase + s"$id/info.0.json")
     val ref = cache.make(s"$id.json")
     ref.load(url)
     ref
   }
+  protected lazy val cache = Cache.cache
   /**
     * URL to comic on [[http://xkcd.com/]]
     */
