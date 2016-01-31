@@ -3,6 +3,7 @@ language: scala
 scala:
    - 2.11.7
 script:
-   - sbt ++$TRAVIS_SCALA_VERSION test
+   - sbt ++$TRAVIS_SCALA_VERSION clean coverage test
 jdk:
    - oraclejdk8
+after_success: "sbt coveralls"
