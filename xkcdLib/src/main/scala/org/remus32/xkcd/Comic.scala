@@ -174,28 +174,16 @@ object Comic extends LazyLogging {
     * @return Comic instance
     */
   def apply(id: Int, force: Boolean = false): Comic = {
-    try {
       if (force) {
-        return new Comic(id)
+        new Comic(id)
       } else {
         id match {
           case x if x > latest.id => throw ComicNotFoundException(id)
-          case 404 => return new Comic404()
-          case 1608 => return new ComicHoverboard()
-          case x => return new Comic(id)
+          case 404 => new Comic404()
+          case 1608 => new ComicHoverboard()
+          case x => new Comic(id)
         }
       }
-    } catch {
-      case e: ComicNotFoundException =>
-        val id = e.id
-        logger.error(s"Comic $id not found")
-      case e: BadComicIdException =>
-        val id = e.id
-        logger.error(s"$id is not a valid comic identifier")
-      case e: ComicNotFoundException =>
-        logger.error(s"HTTP 404: Comic not found")
-    }
-    null
   }
 
   /**
