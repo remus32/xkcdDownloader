@@ -8,7 +8,7 @@ lazy val commonSettings = Seq(
   libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
   libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.14",
   scalacOptions += "-target:jvm-1.8",
-  coverageEnabled := true
+  coverageEnabled in Test := true
 )
 
 lazy val app = (project in file(".")).
