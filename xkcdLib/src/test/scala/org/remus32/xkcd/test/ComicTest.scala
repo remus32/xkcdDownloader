@@ -6,14 +6,11 @@ import java.net.URL
 import org.apache.commons.io.IOUtils
 import org.remus32.xkcd._
 import org.remus32.xkcd.caches.File
-import org.scalatest.FlatSpec
+import org.scalatest.{BeforeAndAfter, FlatSpec}
 
-class ComicTest extends FlatSpec {
-
-  def init() = {
-    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "warn")
-    System.setProperty("xkcd.cache", "file")
-    Util.init()
+class ComicTest extends FlatSpec with BeforeAndAfter {
+  before {
+    init()
   }
 
   "Cache controller" should "select File wrapper if no property given" in {
@@ -26,14 +23,12 @@ class ComicTest extends FlatSpec {
   }
 
   "Comic resolver" should "throw BadComicIdException if stupid string is given" in {
-    init()
     intercept[BadComicIdException] {
       Comic.resolveComic("fafpdmpaojmdf")
     }
   }
 
   "Comic factory" should "throw ComicNotFoundException if non-existent comic id is given" in {
-    init()
     intercept[ComicNotFoundException] {
       Comic(Comic.latest.id * 2)
     }

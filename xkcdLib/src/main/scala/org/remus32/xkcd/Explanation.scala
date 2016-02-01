@@ -1,7 +1,6 @@
 package org.remus32.xkcd
 
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.http.impl.client.HttpClients
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.parser.Parser
@@ -49,7 +48,6 @@ class Explanation(val comic: Comic) extends LazyLogging {
 }
 
 object Explanation extends LazyLogging {
-  val httpclient = HttpClients.createDefault()
   def apply(id: Comic): Explanation = new Explanation(id)
 
   case class Pattern(document: Document, comicTitle: String)

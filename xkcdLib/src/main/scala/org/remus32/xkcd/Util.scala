@@ -59,6 +59,13 @@ object Util extends LazyLogging {
     Cache.loadDefault()
   }
 
+  def fullClean() = {
+    cleanCache()
+    cleanOut()
+  }
+
+  def cleanCache() = clean(cache())
+
   /**
     * Get cache directory
     *
@@ -66,7 +73,7 @@ object Util extends LazyLogging {
     *
     * @return
     */
-  def cache(log: Boolean = true): io.File = {
+  def cache(): io.File = {
     val prop = System.getProperty("xkcd.cacheDir")
     prop match {
       case null =>
@@ -76,6 +83,13 @@ object Util extends LazyLogging {
       case e =>
         new io.File(System.getProperty("user.dir") + "/xkcdCache")
     }
+  }
+
+  def cleanOut() = clean(out())
+
+  private def clean(what: File) = {
+    FileUtils.deleteDirectory(what)
+    what.mkdirs()
   }
 
   /**
@@ -90,14 +104,10 @@ object Util extends LazyLogging {
     prop match {
       case null =>
         new io.File(System.getProperty("user.dir") + "/xkcd")
-      case e: String =>
-        try {
-          return new io.File(e)
-        } catch {
-          case e: io.IOException =>
-            logger.error("Got IOException", e)
-        }
+      case e if new File(e).isDirectory =>
+        new File(e)
+      case e =>
+        new io.File(System.getProperty("user.dir") + "/xkcd")
     }
-    new io.File(System.getProperty("user.dir") + "/xkcd")
   }
 }

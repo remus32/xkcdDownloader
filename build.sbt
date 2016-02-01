@@ -7,7 +7,6 @@ lazy val commonSettings = Seq(
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0-M15" % "test",
   libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
   libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.14",
-  coverageEnabled in Test := true,
   scalacOptions ++= Seq(
     "-feature",
     "-deprecation",
@@ -39,7 +38,6 @@ lazy val lib = (project in file("xkcdLib")).
     libraryDependencies += "com.google.code.gson" % "gson" % "2.5",
     libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2",
     libraryDependencies += "org.rauschig" % "jarchivelib" % "0.7.1",
-    libraryDependencies += "org.apache.httpcomponents" % "httpclient" % "4.5.1",
     libraryDependencies += "org.jsoup" % "jsoup" % "1.8.3",
     coverageEnabled := true
   )
