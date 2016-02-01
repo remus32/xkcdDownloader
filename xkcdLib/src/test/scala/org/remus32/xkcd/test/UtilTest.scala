@@ -1,6 +1,5 @@
 package org.remus32.xkcd.test
 
-import java.io
 import java.io.{File, FileInputStream}
 
 import org.apache.commons.io.IOUtils
@@ -63,10 +62,6 @@ class UtilTest extends FlatSpec with BeforeAndAfter {
     Util.init()
     val int: Int = cache().listFiles.length
     assert(int > Comic.latest.id || int == Comic.latest.id)
-  }
-
-  "Cache method" should "return cwd+/xkcdCache if no property given" in {
-    assert(cache().getAbsolutePath == new io.File(System.getProperty("user.dir") + "/xkcdCache").getAbsolutePath)
   }
 
   it should "be property value if given" in {
