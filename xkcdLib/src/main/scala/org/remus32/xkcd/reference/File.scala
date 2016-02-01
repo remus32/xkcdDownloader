@@ -16,9 +16,9 @@ class File(val name: String) extends Reference with LazyLogging {
 
   def copyTo(to: io.File): Unit = if (exist()) FileUtils.copyFile(file, to)
 
-  def clean(): Unit = if (exist()) file.delete()
-
   def exist(): Boolean = file.isFile
+
+  def clean(): Unit = if (exist()) file.delete()
 
   def read(): String = {
     if (exist())
