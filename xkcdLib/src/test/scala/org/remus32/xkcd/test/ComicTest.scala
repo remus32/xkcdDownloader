@@ -6,9 +6,12 @@ import java.net.URL
 import org.apache.commons.io.IOUtils
 import org.remus32.xkcd._
 import org.remus32.xkcd.caches.File
-import org.scalatest.FlatSpec
+import org.scalatest.{BeforeAndAfter, FlatSpec}
 
-class ComicTest extends FlatSpec {
+class ComicTest extends FlatSpec with BeforeAndAfter {
+  before {
+    init()
+  }
 
   def init() = {
     System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "warn")

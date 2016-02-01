@@ -6,10 +6,11 @@ import java.io.{File, FileInputStream}
 import org.apache.commons.io.IOUtils
 import org.remus32.xkcd.Util._
 import org.remus32.xkcd.{Comic, Util}
-import org.scalatest.FlatSpec
+import org.scalatest.{BeforeAndAfter, FlatSpec}
 
-class UtilTest extends FlatSpec {
-  def init() = {
+class UtilTest extends FlatSpec with BeforeAndAfter {
+  before {
+    init()
   }
 
   case class Pattern(int: Int, string: String)
