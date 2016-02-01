@@ -22,10 +22,6 @@ class Comic(val id: Int) extends StrictLogging {
     */
   lazy val explainUrl = new URL(s"http://www.explainxkcd.com/wiki/index.php/$id")
   /**
-    * Explanation of this comic
-    */
-  lazy val explanation = Explanation(this)
-  /**
     * Parsed comic metadata
     */
   lazy val data: Pattern = Comic.parse(metaRef.read())
