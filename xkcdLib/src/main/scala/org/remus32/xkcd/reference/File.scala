@@ -1,7 +1,7 @@
 package org.remus32.xkcd.reference
 
 import java.io
-import java.io.{FileOutputStream, FileReader}
+import java.io.{FileOutputStream, FileReader, IOException}
 import java.net.URL
 
 import com.typesafe.scalalogging.LazyLogging
@@ -24,9 +24,7 @@ class File(val name: String) extends Reference with LazyLogging {
     if (exist())
       IOUtils.toString(new FileReader(file))
     else {
-      val clazz = Thread.currentThread().getStackTrace()(1).getClassName()
-      val method = Thread.currentThread().getStackTrace()(1).getMethodName()
-      logger.error(s"$clazz.$method was trying to read empty reference!")
+      logger.error(s"Something was trying to read empty reference!", new IOException())
       ""
     }
   }
