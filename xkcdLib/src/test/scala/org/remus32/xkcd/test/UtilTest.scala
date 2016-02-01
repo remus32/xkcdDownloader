@@ -93,8 +93,4 @@ class UtilTest extends FlatSpec {
     assert(out().getAbsolutePath == "/home")
     System.setProperty("xkcd.out", before)
   }
-
-  "Explanation api url" should "work" in {
-    assert(explanationApiUrl(452).toURI.isAbsolute)
-  }
 }

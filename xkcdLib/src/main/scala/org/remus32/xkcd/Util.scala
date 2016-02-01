@@ -100,12 +100,4 @@ object Util extends LazyLogging {
     }
     new io.File(System.getProperty("user.dir") + "/xkcd")
   }
-
-  def explanationApiUrl(id: Int): URL = {
-    new URL(
-      s"http://www.explainxkcd.com/wiki/api.php" +
-        s"?action=query&prop=revisions&format=json&rvprop=content&rvexpandtemplates=" +
-        s"&titles=$id&redirects="
-    )
-  }
 }

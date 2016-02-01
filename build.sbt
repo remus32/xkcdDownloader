@@ -34,7 +34,8 @@ lazy val lib = (project in file("xkcdLib")).
     libraryDependencies += "com.google.code.gson" % "gson" % "2.5",
     libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2",
     libraryDependencies += "org.rauschig" % "jarchivelib" % "0.7.1",
-    libraryDependencies += "org.apache.httpcomponents" % "httpclient" % "4.5.1"
+    libraryDependencies += "org.apache.httpcomponents" % "httpclient" % "4.5.1",
+    libraryDependencies += "org.jsoup" % "jsoup" % "1.8.3"
   )
 /*
 libraryDependencies += "com.google.code.gson" % "gson" % "2.5"
