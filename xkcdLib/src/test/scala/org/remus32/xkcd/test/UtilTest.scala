@@ -82,4 +82,10 @@ class UtilTest extends FlatSpec with BeforeAndAfter {
     assert(out().getAbsolutePath == "/home")
     System.setProperty("xkcd.out", before)
   }
+
+  "Cleaned dirs" should "still exist after cleaning" in {
+    Util.fullClean()
+    assert(Util.cache().isDirectory)
+    assert(Util.out().isDirectory)
+  }
 }
