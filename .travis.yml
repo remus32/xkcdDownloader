@@ -5,3 +5,6 @@ jdk:
 - oraclejdk8
 script:
 - sbt clean test lib/clean lib/test
+cache:
+  directories:
+  - $HOME/.ivy2
