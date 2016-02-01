@@ -4,6 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.apache.http.impl.client.HttpClients
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.parser.Parser
 import org.remus32.xkcd.Explanation.Pattern
 
 
@@ -15,7 +16,10 @@ class Explanation(val comic: Comic) extends LazyLogging {
     * Explanation webpage(on [[http://explainxkcd.com]]) url
     */
   lazy val apiUrl = comic.explainUrl
-  lazy val apiRef = Cache.cache.make(s"exp-$id.html")
+  lazy val apiRef = {
+    Cache.cache.make(s"exp-$id.html")
+
+  }
   lazy val parsed: Document = {
     if (apiRef.exist()) {
       Jsoup.parse(apiRef.read())
@@ -28,9 +32,12 @@ class Explanation(val comic: Comic) extends LazyLogging {
     }
   }
   lazy val api: Pattern = {
-
-    new Pattern(parsed)
+    new Pattern(
+      parsed,
+      Parser.unescapeEntities(parsed.select("a.text.external > span").html(), false)
+    )
   }
+  lazy val comicTitle = api.comicTitle
   private val id = comic.id
 
   def info(): String = {
@@ -45,5 +52,5 @@ object Explanation extends LazyLogging {
   val httpclient = HttpClients.createDefault()
   def apply(id: Comic): Explanation = new Explanation(id)
 
-  case class Pattern(document: Document)
+  case class Pattern(document: Document, comicTitle: String)
 }

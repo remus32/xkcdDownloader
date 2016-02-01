@@ -19,6 +19,10 @@ class ExplanationTest extends FlatSpec {
   }
   "Explanation" should "download api data" in {
     val exp = Comic(623).explanation
-    assert(exp.apiRef.read() != "")
+    assert(exp.parsed.outerHtml() != "")
+  }
+  it should "return valid comic title" in {
+    val exp = Comic(623).explanation
+    assert(exp.comicTitle == "Comic #623 (August 14, 2009)")
   }
 }
