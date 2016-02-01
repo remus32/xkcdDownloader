@@ -104,14 +104,10 @@ object Util extends LazyLogging {
     prop match {
       case null =>
         new io.File(System.getProperty("user.dir") + "/xkcd")
-      case e: String =>
-        try {
-          return new io.File(e)
-        } catch {
-          case e: io.IOException =>
-            logger.error("Got IOException", e)
-        }
+      case e if new File(e).isDirectory =>
+        new File(e)
+      case e =>
+        new io.File(System.getProperty("user.dir") + "/xkcd")
     }
-    new io.File(System.getProperty("user.dir") + "/xkcd")
   }
 }
