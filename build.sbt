@@ -7,7 +7,12 @@ lazy val commonSettings = Seq(
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0-M15" % "test",
   libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
   libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.14",
-  scalacOptions += "-target:jvm-1.8"
+  coverageEnabled in Test := true,
+  scalacOptions ++= Seq(
+    "-feature",
+    "-deprecation",
+    "-target:jvm-1.7"
+  )
 )
 
 lazy val app = (project in file(".")).
