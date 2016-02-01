@@ -42,15 +42,3 @@ lazy val lib = (project in file("xkcdLib")).
     libraryDependencies += "org.apache.httpcomponents" % "httpclient" % "4.5.1",
     coverageEnabled := true
   )
-/*
-libraryDependencies += "com.google.code.gson" % "gson" % "2.5"
-libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2"
-libraryDependencies += "commons-cli" % "commons-cli" % "1.3.1"
-libraryDependencies += "jline" % "jline" % "2.13"
-libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "2.0.0-M2"
-libraryDependencies += "org.rauschig" % "jarchivelib" % "0.7.1"
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0"
-libraryDependencies += "org.slf4j" % "slf4j-jdk14" % "1.7.14"
-*/
-
-
