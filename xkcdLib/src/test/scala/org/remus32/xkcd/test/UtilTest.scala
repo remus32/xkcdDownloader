@@ -16,7 +16,6 @@ class UtilTest extends FlatSpec with BeforeAndAfter {
   case class Pattern(int: Int, string: String)
 
   "Gson in util" should "parse json" in {
-    init()
     val a = new Pattern(2, "hello")
     val b = "{int: 2, string: \"hello\"}"
     assert(a.int == gson.fromJson(b, classOf[Pattern]).int)
@@ -24,7 +23,6 @@ class UtilTest extends FlatSpec with BeforeAndAfter {
   }
 
   "Gson in util" should "make json" in {
-    init()
     val a = new Pattern(2, "hello")
     val b = "{int: 2, string: \"hello\"}"
     assert(
@@ -33,7 +31,6 @@ class UtilTest extends FlatSpec with BeforeAndAfter {
   }
 
   "Downloader" should "download files from url" in {
-    init()
     val res = getClass.getResource("/test0")
     val out = new File(cache(), "test0")
     val compare = "hello world"
@@ -42,32 +39,27 @@ class UtilTest extends FlatSpec with BeforeAndAfter {
   }
 
   "Deleteonexit" should "be false if property is not defined" in {
-    init()
     //noinspection SimplifyBoolean
     assert(deleteOnExit() == false)
   }
 
   it should "be true if property set to true" in {
-    init()
     System.setProperty("xkcd.deleteonexit", "true")
     //noinspection SimplifyBoolean
     assert(deleteOnExit() == true)
   }
 
   "Init method" should "create directory for cache" in {
-    init()
     Util.init()
     assert(cache().isDirectory)
   }
 
   it should "create directory for output" in {
-    init()
     Util.init()
     assert(out().isDirectory)
   }
 
   it should "load default cache" in {
-    init()
     Util.init()
     val int: Int = cache().listFiles.length
     assert(int > Comic.latest.id || int == Comic.latest.id)
@@ -84,11 +76,7 @@ class UtilTest extends FlatSpec with BeforeAndAfter {
     System.setProperty("xkcd.cacheDir", before)
   }
 
-  "Output method" should "return cwd+/xkcd if no property given" in {
-    assert(out.getAbsolutePath == new io.File(System.getProperty("user.dir") + "/xkcd").getAbsolutePath)
-  }
-
-  it should "be property value if given" in {
+  "Method output()" should "be property value if given" in {
     val before = out().getAbsolutePath
     System.setProperty("xkcd.out", "/home")
     assert(out().getAbsolutePath == "/home")

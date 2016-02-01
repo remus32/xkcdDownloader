@@ -13,12 +13,6 @@ class ComicTest extends FlatSpec with BeforeAndAfter {
     init()
   }
 
-  def init() = {
-    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "warn")
-    System.setProperty("xkcd.cache", "file")
-    Util.init()
-  }
-
   "Cache controller" should "select File wrapper if no property given" in {
     assert(Cache.cache.isInstanceOf[File])
   }
@@ -29,34 +23,29 @@ class ComicTest extends FlatSpec with BeforeAndAfter {
   }
 
   "Comic resolver" should "throw BadComicIdException if stupid string is given" in {
-    init()
     intercept[BadComicIdException] {
       Comic.resolveComic("fafpdmpaojmdf")
     }
   }
 
   "Comic factory" should "throw ComicNotFoundException if non-existent comic id is given" in {
-    init()
     intercept[ComicNotFoundException] {
       Comic(Comic.latest.id * 2)
     }
   }
 
   it should "make Comic404 if 404 id given" in {
-    init()
     val comic = Comic(404)
     assert(comic.data.num == 404)
     assert(comic.image.toFile.isFile)
   }
 
   "Comic explanation" should "exist" in {
-    init()
     val comic = Comic(723)
     assert(comic.explainUrl.toURI.isAbsolute)
   }
 
   "Reference" should "work" in {
-    init()
     val ref = Cache.cache.make("test0")
     ref.load(new URL(Util.xkcdBase + "732/info.0.json"))
     assert(ref.read == Comic(732).metaRef.read())
@@ -65,7 +54,6 @@ class ComicTest extends FlatSpec with BeforeAndAfter {
   }
 
   "List of all comics" should "contain all comics" in {
-    init()
     assert(Comic.comicList.length == Comic.latest.id)
   }
 
